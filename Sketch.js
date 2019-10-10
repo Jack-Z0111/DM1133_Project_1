@@ -10,10 +10,30 @@ Mode 2: Particles chase the rectanglem controlled by mouse. The group surges thr
 Mode 3: Particles fall away. They drop from the black board and flee away from the cross, like a quiet death.
 The transition from 3 to 1 simulates the respawning.
 
-Reminder: When switching back to mode 1, all circles come back from outside of the screen. It may take some time to recover.
-I tried to write an initializer but that turns to a trypophobia thing.
-*/
+Commentary:
+Objective: Set three modes to represent different stage of life.
+Challenges:
+1. Utilize vectors: using vectors are much more convenient.
+2. Imitate centripetal force: it is easier than I thought it would be. The acceleration automatically fixes the orbit.
+3. Regulate the shape of orbits: It was hard at first. I can only draw the pattern in Mode 2. After setting the limit of velocity, the shape was stablized.
+In Mode 1, it looks like a dynamic sphere. The limit of velocity drag particles like gravity.
+4. Refresh the screen: inspired by:
+  noiseStorm(by Robert D'Arcy) - https://www.openprocessing.org/sketch/197563
 
+Things I failed:
+1. Initialization: When switching back to Mode 1, all circles come back from outside of the screen. It may take some time to recover.
+I tried to write an initializer but that turns to a trypophobia thing.
+2. Adding elements: 
+  Wobbly Swarm(by Konstantin Makhmutov) - https://www.openprocessing.org/sketch/492096
+  This project is also about imitating force. Each object will react with others like stars in the space. It's so cool but I found it hard to do that.
+3. Shapes stick with each other:
+  Particles triangles(by oggy) - https://www.openprocessing.org/sketch/147268
+
+I also wanted to add more modes in the sketch. But since I failed to do the initialize function, other modes didn't seem different from what I have here,
+I removed other modes that make the sketch too messy. I was inspired by the idea of gravity but don't want to go too far with the topic.
+The interaction is weak, needing to improve that later in other versions.
+
+*/
 
 let spike = []; //Spike array is to store the objects.
 let i = 0; //Count of each loop
@@ -101,7 +121,8 @@ class Spike{
     //Create the black circle
     fill(0);
     noStroke();
-    ellipse(this.p.x, this.p.y, 7.5, 7.5);//Position to the p vector
+    quad(this.p.x, this.p.y - 5.3, this.p.x - 5.3, this.p.y, this.p.x, 
+         this.p.y + 5.3, this.p.x + 5.3, this.p.y);//Position to the p vector
   }
   
   brush2(){
@@ -113,9 +134,9 @@ class Spike{
   
   brush3(){
     //Set the random orange/green color
-    this.r = random(100, 250);
-    this.g = random(50, 100);
-    this.g = random(50, 70);
+    this.r = random(230, 255);
+    this.g = random(120, 180);
+    this.g = random(20, 60);
     fill(this.r, this.g, this.b, this.c)
     noStroke();
     ellipse(this.p.x, this.p.y, 7.5, 7.5);
